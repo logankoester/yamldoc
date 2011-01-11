@@ -27,7 +27,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
 interpreted as described in RFC 2119*.
 
-=== 3. Components
+== 3. Components
 * Specification
 * Validation Tool
   * Validation will fail if any nodes are missing documentation, discouraging
@@ -47,7 +47,7 @@ interpreted as described in RFC 2119*.
       * for GUI toolkits (TODO)
       * for HTML forms in "admin panels" (TODO)
 
-=== 4. Getting Started
+== 4. Getting Started
 
 A YAMLDoc file is a YAML example file with the filename format 
 "NAME.example.yml.", with an optional extension to signal interpreted code to a 
@@ -69,7 +69,7 @@ the default values therein are likely to be valid on a majority of systems.
 
 A user MUST NOT edit the example file.
 
-=== 5. Maintaining compatibility
+== 5. Maintaining compatibility
 
 Any time a new node is added to, changed or removed from the application, the 
 developer MUST also modify this node accordingly in the example file. The 
@@ -79,7 +79,7 @@ A warning MAY be raised by the application when a version difference is
 detected between the example and deployed YAML files. This MAY also cause
 a unit test to fail when the test suite is run.
 
-=== 6. Specification
+== 6. Specification
 
 YAMLDoc content must be contained in a document. That is, YAMLDoc SHALL be
 ignored by the parser before "---" and after "...".
