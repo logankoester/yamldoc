@@ -7,7 +7,7 @@ files and generate tools for nontechnical users to edit them.
 Users should never be *forced* to edit a text file to configure software, but 
 should always be able to exercise that option in a clear and usable way.
 
-Configuration File Design is a highly overlooked aspect of software 
+Proper configuration file design is a highly overlooked aspect of software 
 engineering.
 
 == 2. Purpose
@@ -27,7 +27,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
 interpreted as described in RFC 2119*.
 
-== 3. Components
+=== 3. Components
 * Specification
 * Validation Tool
   * Validation will fail if any nodes are missing documentation, discouraging
