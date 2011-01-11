@@ -1,6 +1,44 @@
-= yamldoc
+= YAMLDoc
 
-Description goes here.
+== Purpose
+
+YAMLDoc is a documentation specification that helps you document YAML* software
+configuration files in a way that is nice to read in plain text, yet structured
+enough to be automatically extracted and processed by a machine.
+
+Documenting your configuration files in this way grants you the ability to
+generate interactive editors and GUI forms to help nontechnical users get your
+software up and running quickly, and helps eliminate guesswork which leads to
+invalid directive values creating unexpected program state.
+
+YAMLDoc borrows heavily from TomDoc*.
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
+interpreted as described in RFC 2119*.
+
+== Components
+* YAMLDoc Spec (This document)
+* YAMLDoc Validation Tool
+  * Validation will fail if any nodes are missing documentation, discouraging
+    the Bloated Configuration File antipattern described by Chris Edwards*,
+    wherein a file intended for user-editable configuration settings grows to
+    include static application configuration that should never change.
+  * This tool can be used to write unit tests for your configuration files
+    capable of catching unexpected errors introduced through misconfiguration.
+* YAMLDoc parser which can be extended with decorators for generating:
+  * Manpages (TODO)
+  * RDoc files (TODO)
+  * Interactive configuration tools
+    * for the command line (TODO)
+    * for GUI toolkits (TODO)
+    * for HTML forms in "admin panels" (TODO)
+
+== References
+  1. YAML - http://www.yaml.org/
+  1. TomDoc - http://tomdoc.org
+  2. RFC 2119 - http://www.ietf.org/rfc/rfc2119.txt
+  3. Antipattern: The Bloated Configuration File http://www.chrisedwards.dreamhosters.com/blog/2010/07/07/antipattern-the-bloated-configuration-file/
 
 == Contributing to yamldoc
  
