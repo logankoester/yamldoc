@@ -1,6 +1,16 @@
 = YAMLDoc
 
-== Purpose
+YAMLDoc helps software developers design clean, understandable configuration
+files and generate tools for nontechnical users to edit them.
+
+== 1. Philosophy
+Users should never be *forced* to edit a text file to configure software, but 
+should always be able to exercise that option in a clear and usable way.
+
+Configuration File Design is a highly overlooked aspect of software 
+engineering.
+
+== 2. Purpose
 
 YAMLDoc is a documentation specification that helps you document YAML* software
 configuration files in a way that is nice to read in plain text, yet structured
@@ -17,22 +27,136 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be 
 interpreted as described in RFC 2119*.
 
-== Components
-* YAMLDoc Spec (This document)
-* YAMLDoc Validation Tool
+== 3. Components
+* Specification
+* Validation Tool
   * Validation will fail if any nodes are missing documentation, discouraging
     the Bloated Configuration File antipattern described by Chris Edwards*,
     wherein a file intended for user-editable configuration settings grows to
     include static application configuration that should never change.
   * This tool can be used to write unit tests for your configuration files
     capable of catching unexpected errors introduced through misconfiguration.
-* YAMLDoc parser which can be extended with decorators for generating:
-  * Manpages (TODO)
-  * RDoc files (TODO)
-  * Interactive configuration tools
-    * for the command line (TODO)
-    * for GUI toolkits (TODO)
-    * for HTML forms in "admin panels" (TODO)
+  * Capable of detecting version differences between the example and deployed
+    YAML files, which MAY be used to raise a warning when the application
+    is initialized, or cause a unit test to fail.
+  * Parser which can be extended with decorators for generating:
+    * Manpages (TODO)
+    * RDoc files (TODO)
+    * Interactive configuration tools
+      * for the command line (TODO)
+      * for GUI toolkits (TODO)
+      * for HTML forms in "admin panels" (TODO)
+
+=== 4. Getting Started
+
+A YAMLDoc file is a YAML example file with the filename format 
+"NAME.example.yml.", with an optional extension to signal interpreted code to a 
+preprocessor (for example, "application.example.yml.erb").
+
+The example file MUST contain every node expected by the application, and 
+SHOULD provide sane default values for all nodes.
+
+The example file SHOULD be checked into your version-control system, and MUST 
+NOT ever be read into your application itself.
+
+When your application is deployed, this file MUST be copied to the same
+directory with the ".example" extension omitted. This copy is the file to be
+read into your application, and MUST NOT be checked into your VCS.
+
+If you are using an automated installation or deployment script, the file
+SHOULD be copied automatically and an editor presented to the user, unless
+the default values therein are likely to be valid on a majority of systems.
+
+A user MUST NOT edit the example file.
+
+=== 5. Maintaining compatibility
+
+Any time a new node is added to, changed or removed from the application, the 
+developer MUST also modify this node accordingly in the example file. The 
+YAMLDoc tool MAY then be used to quickly update his personal copy.
+
+A warning MAY be raised by the application when a version difference is
+detected between the example and deployed YAML files. This MAY also cause
+a unit test to fail when the test suite is run.
+
+=== 6. Specification
+
+YAMLDoc content must be contained in a document. That is, YAMLDoc SHALL be
+ignored by the parser before "---" and after "...".
+
+Every node MUST be documented with YAMLDoc. Undocumented nodes are not 
+permitted.
+
+A YAMLDoc block consists of a block of single comment markers (#) that
+appear directly above the node. Lines SHOULD be wrapped at 80 characters. Lines
+that contain text MUST be separated from the comment marker by a single space.
+Lines that do not contain text SHOULD consist of just a comment marker (no
+trailing spaces).
+
+*Example 6.1*
+  # Directives go here (YAMLDoc is ignored)
+  ---
+  # YAMLDoc and document content goes here...
+
+  # Name of the application
+  application_name: Hello World
+  ...
+  # YAMLDoc is ignored
+  ---
+  # Another document
+
+A YAMLDoc block two three sections; a Description, followed by either Choices 
+or Format, but not both. Only a description is required.
+
+==== 6.1 The Description Section
+
+The description section SHOULD be in plain sentences. Each sentence SHOULD end 
+with a period. Good descriptions explain what the setting does at a high level.
+Make sure to explain any pitfalls that the user may experience. Lines SHOULD be 
+wrapped at 80 characters.
+
+==== 6.2 The Choices Section
+
+A node with a limited set of valid choices MUST document these choices in
+standard YAML inside the YAMLDoc comment block. This block is started with the
+"Choose" keyword (case-sensitive), optionally followed by the number of choices
+allowed, then a colon, followed by a YAML sequence. This YAML sequence MAY be
+on the same line as the Choose keyword.
+
+*Example 6.2*
+  # Fruits you enjoy
+  # Choose:
+  # - apples
+  # - oranges
+  # - bananas
+  preferred_fruits: ['oranges', 'bananas']
+  
+  # Favorite fruit
+  # Choose 1: ['apples','oranges','bananas']
+  favorite_fruit: apples
+
+The allowed choices MAY reference a sequence defined earlier in the document.
+
+*Example 6.3*
+  # Types of fruit
+  &types_of_fruit:
+    - apples
+    - oranges
+    - bananas
+  
+  # Fruits you enjoy
+  # Choose: *types_of_fruit
+  preferred_fruits: ['oranges', 'bananas']
+
+==== 6.3 The Format Section
+
+A node with a scalar value that MUST match a particular format can be validated
+with a Ruby-compatible regular expression.
+
+*Example 6.4*
+  # Administrator Email
+  # Format: w+@w+\.*
+  admin_email: foo@bar.com
 
 == References
 1. YAML - http://www.yaml.org/
@@ -40,7 +164,7 @@ interpreted as described in RFC 2119*.
 2. RFC 2119 - http://www.ietf.org/rfc/rfc2119.txt
 3. Antipattern: The Bloated Configuration File http://www.chrisedwards.dreamhosters.com/blog/2010/07/07/antipattern-the-bloated-configuration-file/
 
-== Contributing to yamldoc
+== Contributing to YAMLDoc
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
