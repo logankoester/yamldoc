@@ -35,10 +35,10 @@ interpreted as described in RFC 2119*.
     * for HTML forms in "admin panels" (TODO)
 
 == References
-  1. YAML - http://www.yaml.org/
-  1. TomDoc - http://tomdoc.org
-  2. RFC 2119 - http://www.ietf.org/rfc/rfc2119.txt
-  3. Antipattern: The Bloated Configuration File http://www.chrisedwards.dreamhosters.com/blog/2010/07/07/antipattern-the-bloated-configuration-file/
+1. YAML - http://www.yaml.org/
+1. TomDoc - http://tomdoc.org
+2. RFC 2119 - http://www.ietf.org/rfc/rfc2119.txt
+3. Antipattern: The Bloated Configuration File http://www.chrisedwards.dreamhosters.com/blog/2010/07/07/antipattern-the-bloated-configuration-file/
 
 == Contributing to yamldoc
  
