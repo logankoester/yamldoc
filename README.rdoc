@@ -93,7 +93,7 @@ that contain text MUST be separated from the comment marker by a single space.
 Lines that do not contain text SHOULD consist of just a comment marker (no
 trailing spaces).
 
-*Example 6.1*
+*Example* *6.1*
   # Directives go here (YAMLDoc is ignored)
   ---
   # YAMLDoc and document content goes here...
@@ -123,7 +123,7 @@ standard YAML inside the YAMLDoc comment block. This block is started with the
 allowed, then a colon, followed by a YAML sequence. This YAML sequence MAY be
 on the same line as the Choose keyword.
 
-*Example 6.2*
+*Example* *6.2*
   # Fruits you enjoy
   # Choose:
   # - apples
@@ -137,7 +137,7 @@ on the same line as the Choose keyword.
 
 The allowed choices MAY reference a sequence defined earlier in the document.
 
-*Example 6.3*
+*Example* 6.3*
   # Types of fruit
   &types_of_fruit:
     - apples
@@ -153,7 +153,7 @@ The allowed choices MAY reference a sequence defined earlier in the document.
 A node with a scalar value that MUST match a particular format can be validated
 with a Ruby-compatible regular expression.
 
-*Example 6.4*
+*Example* 6.4*
   # Administrator Email
   # Format: w+@w+\.*
   admin_email: foo@bar.com
