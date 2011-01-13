@@ -42,10 +42,10 @@ interpreted as described in RFC 2119*.
   * Parser which can be extended with decorators for generating:
     * Manpages (TODO)
     * RDoc files (TODO)
-    * Interactive configuration tools
-      * for the command line (TODO)
-      * for GUI toolkits (TODO)
-      * for HTML forms in "admin panels" (TODO)
+    * Interactive configuration tools for
+      * the command line (TODO)
+      * GUI toolkits (TODO)
+      * HTML forms in "admin panels" (TODO)
 
 == 4. Getting Started
 
@@ -71,7 +71,7 @@ A user MUST NOT edit the example file.
 
 == 5. Maintaining compatibility
 
-Any time a new node is added to, changed or removed from the application, the 
+Any time a node is added to, changed or removed from the application, the 
 developer MUST also modify this node accordingly in the example file. The 
 YAMLDoc tool MAY then be used to quickly update his personal copy.
 
@@ -105,7 +105,7 @@ Example 6.1
   ---
   # Another document
 
-A YAMLDoc block two three sections; a Description, followed by either Choices 
+A YAMLDoc block contains two sections; a Description, followed by either Choices 
 or Format, but not both. Only a description is required.
 
 ==== 6.1 The Description Section
@@ -120,8 +120,8 @@ wrapped at 80 characters.
 A node with a limited set of valid choices MUST document these choices in
 standard YAML inside the YAMLDoc comment block. This block is started with the
 "Choose" keyword (case-sensitive), optionally followed by the number of choices
-allowed, then a colon, followed by a YAML sequence. This YAML sequence MAY be
-on the same line as the Choose keyword.
+allowed (as an Integer or Ruby range), then a colon, followed by a YAML 
+sequence. This YAML sequence MAY be on the same line as the Choose keyword.
 
 Example 6.2
   # Fruits you enjoy

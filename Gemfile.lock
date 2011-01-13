@@ -1,0 +1,33 @@
+GIT
+  remote: https://github.com/thecatwasnot/commander.git
+  revision: 311dbb450a643532e9988424af19fd4794991fe3
+  specs:
+    commander (4.0.2)
+      highline (>= 1.5.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bacon (1.1.0)
+    colorize (0.5.8)
+    fakefs (0.3.1)
+    git (1.2.5)
+    highline (1.6.1)
+    jeweler (1.5.2)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
+    rake (0.8.7)
+    rcov (0.9.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bacon
+  bundler (~> 1.0.0)
+  colorize (>= 0.5.8)
+  commander (>= 3.2.9)!
+  fakefs (>= 0.3.1)
+  jeweler (~> 1.5.2)
+  rcov

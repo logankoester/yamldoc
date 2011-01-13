@@ -1,0 +1,10 @@
+---
+
+# The name of the application
+app_name: Basic Config
+
+# The purpose of said fictional application
+uses:
+  - "testing"
+  - "showing off"
+  - "...just kidding, its worthless"

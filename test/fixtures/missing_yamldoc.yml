@@ -1,0 +1,5 @@
+---
+# This key should be valid
+key_with_yamldoc: "Should not generate an error"
+
+key_with_no_yamldoc: "Should generate an error"

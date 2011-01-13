@@ -1,0 +1,126 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'commander'
+require 'colorize'
+require File.join(File.dirname(File.expand_path(__FILE__)), '..', 'lib', 'yamldoc')
+
+program :name, "YAMLDoc"
+program :version, "0.0.1"
+program :description, "The YAMLDoc validation tool."
+
+default_command :help
+
+UNKNOWN_TEMPLATE = "That does not appear to be a YAMLDoc template file." 
+NONE = 'None of the above'
+INSTALL_SUCCESS = "Installation complete!"
+INSTALL_FAIL = "Installation has not completed successfully"
+
+command :generate do |c|
+  c.syntax = 'yamldoc generate [decorator] FILE'
+  c.description = "Generate documentation or GUI from FILE using a decorator.\n"
+  c.when_called do |args, options|
+    say "Not yet implemented"
+  end
+end
+
+command :decorators do |c|
+  c.syntax = 'yamldoc decorator'
+  c.description = "List the available YAMLDoc decorators.\n"
+  c.when_called do |args, options|
+    say "Not yet implemented"
+  end
+end
+
+command :validate do |c|
+  c.syntax = 'yamldoc validate FILE'
+  c.description = "Check that a YAMLDoc file is valid, and (unless validating an example file), ensure that it reflects the current version of its example.\n"
+  c.option '--nocolor', 'Disable colorized output'
+  c.when_called do |args, options|
+    options.default :nocolor => false
+    file = args[0]
+    success = true
+
+    # Validate the provided file
+    YAMLDoc.logger.formatter = YAMLDoc::ColorizedSimpleLogger.new unless options.nocolor
+    say "Loading #{file}"
+    documents = YAMLDoc::Parser.load_file(file)
+    documents.each_with_index do |d,i| 
+      say "Validating YAML document #{i+1}/#{documents.size}"
+      success = false if (d.validate == false)
+    end
+
+    if success
+      result = "Validation successful!".colorize(:green)
+    else
+      result = "Validation failed.".colorize(:red)
+    end
+    result = result.uncolorize if options.nocolor
+    say "#{result}"
+  end
+end
+
+command :install do |c|
+  c.syntax = 'yamldoc install [FILE]'
+  c.description = "Create a deployment copy from a YAMLDoc example file\n"
+  c.option '--force', 'Overwrite any existing deployment copy'
+  c.option '--interactive', 'Ask me questions to configure my new deployment'
+  c.when_called do |args, options|
+    filename = args[0]
+
+    ##############################
+    # HANDLE INVALID INPUT FILES #
+    ##############################
+    
+    if filename && File.exists?(filename) && YAMLDoc::YAMLFile.template?(filename)
+      # Proceed normally
+    elsif options.interactive
+      templates = YAMLDoc::YAMLFile.find_templates(Dir.pwd)
+      if options.interactive && !templates.empty?
+        # Choose a template file from a menu
+        say UNKNOWN_TEMPLATE
+        say "Were you looking for one of these?"
+        filename = choose(*templates.+([NONE]))
+        exit if filename == NONE
+      else
+        say UNKNOWN_TEMPLATE
+        say "Try running with --interactive to view a list." unless options.interactive
+        exit
+      end
+    else
+      say UNKNOWN_TEMPLATE
+      exit
+    end
+
+    target = YAMLDoc::YAMLFile.associated_filename(filename)
+
+    # Check if a copy is already installed.
+    if YAMLDoc::YAMLFile.installed?(filename) && !options.force
+      if options.interactive
+        overwrite = agree "Do you want to overwrite your existing deployment at #{target}"
+        exit unless overwrite
+      else
+        say "File is already installed, use --force to overwrite."
+        exit
+      end
+    end
+
+    # Proceed with installation
+    say "Copying #{filename} to #{target}"
+
+    if options.interactive
+    else
+      result = YAMLDoc::YAMLFile.install(filename)
+    end
+
+    result ? say(INSTALL_SUCCESS) : say(INSTALL_FAIL)
+  end
+end
+
+command :upgrade do |c|
+  c.syntax = 'yamldoc upgrade FILE'
+  c.description = "Upgrade a local copy to resolve differences from its example file\n"
+  c.when_called do |args, options|
+    say "Not yet implemented"
+  end
+end
